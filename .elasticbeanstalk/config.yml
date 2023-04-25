@@ -1,10 +1,10 @@
 branch-defaults:
   main:
-    environment: x22114327-schoolManagementApp-env
+    environment: x22114327-schoolManagementAppEnvironment
     group_suffix: null
 
 environment-defaults:
-  x22114327-schoolManagementApp-env:
+  x22114327-schoolManagementAppEnvironment:
     branch: null
     repository: null
 global:
