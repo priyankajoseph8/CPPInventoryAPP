@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     'widget_tweaks',                            # uses 'django-widget-tweaks' app
     'crispy_forms',                             # uses 'django-crispy-forms' app
     'login_required', 
-    'purchase_library',# uses 'django-login-required-middleware' app
+    # uses 'django-login-required-middleware' app
 
     'homepage.apps.HomepageConfig',
     'inventory.apps.InventoryConfig',
     'transactions.apps.TransactionsConfig',
+    'inventory.libraries.purchase_library'
 
 ]
 
