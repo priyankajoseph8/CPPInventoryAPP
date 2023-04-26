@@ -10,10 +10,7 @@ from django.views.generic import (
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import sys
-sys.path.append('/inventory/libraries')
-
-from purchase_library import calculate_total_price, format_phone_number
+from .inventory.libraries.purchase_library import calculate_total_price, format_phone_number
 
 from .models import (
     PurchaseBill, 
