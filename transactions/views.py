@@ -30,6 +30,7 @@ from .forms import (
 )
 from inventory.models import Stock
 from libraries.custom_queryset import get_active_suppliers
+from libraries.custom_utils import create_purchase_bill
 
 
 
@@ -139,39 +140,31 @@ class SelectSupplierView(View):
 
 
 # used to generate a bill object and save items
-class PurchaseCreateView(View):                                                 
+class PurchaseCreateView(View):
     template_name = 'purchases/new_purchase.html'
 
     def get(self, request, pk):
-        formset = PurchaseItemFormset(request.GET or None)                      # renders an empty formset
-        supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
+        formset = PurchaseItemFormset(request.GET or None)
+        supplierobj = get_object_or_404(Supplier, pk=pk)
         context = {
             'formset'   : formset,
             'supplier'  : supplierobj,
-        }                                                                       # sends the supplier and formset as context
+        }
         return render(request, self.template_name, context)
 
     def post(self, request, pk):
-        formset = PurchaseItemFormset(request.POST)                             # recieves a post method for the formset
-        supplierobj = get_object_or_404(Supplier, pk=pk)                        # gets the supplier object
+        formset = PurchaseItemFormset(request.POST)
+        supplierobj = get_object_or_404(Supplier, pk=pk)
         if formset.is_valid():
-            # saves bill
-            billobj = PurchaseBill(supplier=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
-            billobj.save()                                                      # saves object into the db
-            # create bill details object
+            billobj = create_purchase_bill(pk) # uses the custom function to create a new PurchaseBill object
             billdetailsobj = PurchaseBillDetails(billno=billobj)
             billdetailsobj.save()
-            for form in formset:                                                # for loop to save each individual form as its own object
-                # false saves the item and links bill to the item
+            for form in formset:
                 billitem = form.save(commit=False)
-                billitem.billno = billobj                                       # links the bill object to the items
-                # gets the stock item
-                stock = get_object_or_404(Stock, name=billitem.stock.name)       # gets the item
-                # calculates the total price
+                billitem.billno = billobj
+                stock = get_object_or_404(Stock, name=billitem.stock.name)
                 billitem.totalprice = billitem.perprice * billitem.quantity
-                # updates quantity in stock db
-                stock.quantity += billitem.quantity                              # updates quantity
-                # saves bill item and stock
+                stock.quantity += billitem.quantity
                 stock.save()
                 billitem.save()
             messages.success(request, "Purchased items have been registered successfully")
@@ -182,7 +175,6 @@ class PurchaseCreateView(View):
             'supplier'  : supplierobj
         }
         return render(request, self.template_name, context)
-
 
 # used to delete a bill object
 class PurchaseDeleteView(SuccessMessageMixin, DeleteView):
