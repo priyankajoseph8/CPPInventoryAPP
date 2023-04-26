@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
 from django.views.generic import (
     View, 
     ListView,
@@ -10,7 +9,6 @@ from django.views.generic import (
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .inventory.libraries.purchase_library import calculate_total_price, format_phone_number
 
 from .models import (
     PurchaseBill, 
@@ -31,7 +29,7 @@ from .forms import (
     SaleDetailsForm
 )
 from inventory.models import Stock
-
+from libraries.custom_queryset import get_active_suppliers
 
 
 
@@ -39,7 +37,7 @@ from inventory.models import Stock
 class SupplierListView(ListView):
     model = Supplier
     template_name = "suppliers/suppliers_list.html"
-    queryset = Supplier.objects.filter(is_deleted=False)
+    queryset = get_active_suppliers()
     paginate_by = 10
 
 

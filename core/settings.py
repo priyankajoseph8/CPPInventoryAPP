@@ -26,10 +26,6 @@ SECRET_KEY = 'qyu(9l9v%^+r(vt#ecf+36#lis516#3bo5@bo-rd*d%a=!%8#!'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,18 +33,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'widget_tweaks',                            # uses 'django-widget-tweaks' app
-    'crispy_forms',                             # uses 'django-crispy-forms' app
-    'login_required', 
-    # uses 'django-login-required-middleware' app
-
+    'widget_tweaks',
+    'crispy_forms',
+    'login_required',
     'homepage.apps.HomepageConfig',
     'inventory.apps.InventoryConfig',
     'transactions.apps.TransactionsConfig',
-    'libraries.purchase_library.calculate_total_price',
-    'libraries.purchase_library.format_phone_number',
-    
 
 ]
 
@@ -69,7 +59,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],  # included 'templates' directory for django to access the html templates
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,6 +81,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -132,20 +123,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+#STATIC_URL = '/static/'
+#STATIC_ROOT = ('/path/to/your/static/')
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+#STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'                     # bootstrap template crispy-form uses
+CRISPY_TEMPLATE_PACK = ('bootstrap4')
+                    # bootstrap template crispy-form uses
 
-LOGIN_REDIRECT_URL = 'home'                             # sets the login redirect to the 'home' page after login
+LOGIN_REDIRECT_URL = (
+    'home'
+)
+                          # sets the login redirect to the 'home' page after login
 
-LOGIN_URL = 'login'                                     # sets the 'login' page as default when user tries to illegally access profile or other hidden pages
-
-LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [                    # urls ignored by the login_required. Can be accessed with out logging in
-    'login',
-    'logout',
-    'about',
-]
+LOGIN_URL = 'login'
+LOGIN_REQUIRED_IGNORE_VIEW_NAMES = ['login', 'logout', 'about',]
