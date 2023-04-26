@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from purchase_library import calculate_total_price, format_phone_number
+
 from django.views.generic import (
     View, 
     ListView,
@@ -10,6 +10,11 @@ from django.views.generic import (
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import sys
+sys.path.append('/inventory/libraries')
+
+from purchase_library import calculate_total_price, format_phone_number
+
 from .models import (
     PurchaseBill, 
     Supplier, 
