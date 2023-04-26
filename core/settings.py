@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'inventory.apps.InventoryConfig',
     'transactions.apps.TransactionsConfig',
-    'inventory.libraries.purchase_library'
+    'libraries.purchase_library.calculate_total_price',
+    'libraries.purchase_library.format_phone_number',
+    
 
 ]
 
