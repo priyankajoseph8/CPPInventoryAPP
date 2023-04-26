@@ -1,18 +1,17 @@
 branch-defaults:
   main:
-    environment: x22114327-schoolManagementAppEnvironment
+    environment: x22114327InventoryEnv
     group_suffix: null
-
 environment-defaults:
   x22114327-schoolManagementAppEnvironment:
     branch: null
     repository: null
 global:
-  application_name: x22114327-schoolManagementApp
+  application_name: x22114327_inventory-app
   branch: null
   default_ec2_keyname: null
   default_platform: Python 3.7
-  default_region: eu-west-3
+  default_region: us-east-2
   include_git_submodules: true
   instance_profile: null
   platform_name: null
